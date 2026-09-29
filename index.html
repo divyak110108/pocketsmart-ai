@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PocketSmart AI – Smart Budget & Recommendation Assistant</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo.svg" alt="" width="40" height="40">
+        <div>
+          <strong>PocketSmart AI</strong>
+          <span>Smart budget assistant</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main">
+        <a href="#dashboard" class="nav-link" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#transactions" class="nav-link" data-view="transactions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+          <span>Transactions</span>
+        </a>
+        <a href="#budget" class="nav-link" data-view="budget">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>
+          <span>Monthly budget</span>
+        </a>
+        <a href="#goals" class="nav-link" data-view="goals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+          <span>Savings goals</span>
+        </a>
+        <a href="#assistant" class="nav-link" data-view="assistant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg>
+          <span>AI assistant</span>
+        </a>
+        <a href="#settings" class="nav-link" data-view="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <strong><span class="spark"></span>PocketSmart AI Engine v1.0</strong>
+        Runs offline. Your data stays in this browser.
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-sub" class="muted"></p>
+        </div>
+        <a href="#transactions" class="btn btn-primary" id="quick-add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Add expense
+        </a>
+      </header>
+
+      <!-- Dashboard -->
+      <section class="view" id="view-dashboard">
+        <div class="stats">
+          <div class="card stat stat-income">
+            <span class="stat-label">Monthly income</span>
+            <strong id="st-income"></strong>
+            <small id="st-income-sub"></small>
+          </div>
+          <div class="card stat stat-expense">
+            <span class="stat-label">Spent this month</span>
+            <strong id="st-expenses"></strong>
+            <small id="st-expenses-sub"></small>
+          </div>
+          <div class="card stat stat-savings">
+            <span class="stat-label">Expected savings</span>
+            <strong id="st-savings"></strong>
+            <small id="st-savings-sub"></small>
+          </div>
+          <div class="card stat stat-rate">
+            <span class="stat-label">Savings rate</span>
+            <strong id="st-rate"></strong>
+            <small id="st-rate-sub"></small>
+          </div>
+        </div>
+
+        <div class="grid-2 grid-ai">
+          <div class="card ai-insight">
+            <div class="card-head">
+              <h2 class="ai-title"><span class="spark"></span>AI monthly insight</h2>
+              <button type="button" class="btn btn-ghost btn-sm" id="regen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 4v5h-5"/></svg>
+                Regenerate
+              </button>
+            </div>
+            <div id="ai-summary" class="ai-summary"></div>
+            <div class="ai-meta">
+              <span class="ai-badge"><span class="spark"></span>PocketSmart AI Engine</span>
+              <span id="ai-meta-text" class="muted small"></span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Financial health score</h2></div>
+            <div class="health-body">
+              <div id="gauge" class="gauge"></div>
+              <div id="health-parts" class="brows"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Spending by category</h2></div>
+            <div class="donut-wrap">
+              <div id="donut" class="donut"></div>
+              <ul id="donut-legend" class="legend"></ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <h2>Budget vs actual</h2>
+              <a href="#budget" class="link">Edit budget</a>
+            </div>
+            <div id="budget-bars" class="brows"></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Smart alerts</h2></div>
+            <ul id="alerts" class="recs"></ul>
+          </div>
+          <div class="card ai-card">
+            <div class="card-head"><h2 class="ai-title"><span class="spark"></span>AI recommendations</h2></div>
+            <ul id="top-tip" class="recs"></ul>
+            <button type="button" class="btn btn-soft" id="ask-cut">Ask AI: where can I cut spending?</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Monthly spending trend</h2>
+            <span class="muted small" id="trend-sub"></span>
+          </div>
+          <div id="trend"></div>
+        </div>
+      </section>
+
+      <!-- Transactions -->
+      <section class="view" id="view-transactions">
+        <div class="card">
+          <div class="card-head"><h2>Add expense</h2></div>
+          <form id="tx-form" class="form-grid" novalidate>
+            <label class="field">
+              <span>Date</span>
+              <input type="date" id="tx-date" required>
+            </label>
+            <label class="field field-wide">
+              <span>Description</span>
+              <input type="text" id="tx-desc" placeholder="e.g. Swiggy dinner, Uber to office, EB bill" maxlength="80" required>
+            </label>
+            <label class="field">
+              <span>Amount (₹)</span>
+              <input type="number" id="tx-amount" min="1" step="1" placeholder="0" required>
+            </label>
+            <label class="field">
+              <span>Category</span>
+              <select id="tx-cat"></select>
+            </label>
+            <button type="submit" class="btn btn-primary field-btn">Add expense</button>
+          </form>
+          <p class="hint" id="tx-hint"></p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Transactions</h2>
+            <div class="filters">
+              <select id="filter-month" aria-label="Filter by month"></select>
+              <select id="filter-cat" aria-label="Filter by category"></select>
+            </div>
+          </div>
+          <p class="muted small" id="tx-summary"></p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>Date</th><th>Description</th><th>Category</th><th class="num">Amount</th><th></th></tr>
+              </thead>
+              <tbody id="tx-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Budget -->
+      <section class="view" id="view-budget">
+        <div class="card">
+          <div class="card-head">
+            <h2>Plan your budget</h2>
+            <span class="muted small">Default split follows the 50/30/20 rule</span>
+          </div>
+          <form id="budget-form" novalidate>
+            <label class="field income-field">
+              <span>Monthly income (₹)</span>
+              <input type="number" id="income" min="0" step="100" required>
+            </label>
+            <div id="budget-grid" class="pct-grid"></div>
+            <div class="budget-foot">
+              <span id="pct-total" class="badge"></span>
+              <div class="btn-row">
+                <button type="button" class="btn btn-ghost" id="budget-reset">Reset to defaults</button>
+                <button type="submit" class="btn btn-primary" id="budget-save">Save budget</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2 id="budget-status-title">This month</h2></div>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>Category</th><th class="num">Budget</th><th class="num">Spent</th><th class="num">Remaining</th><th class="num">Used</th><th>Status</th></tr>
+              </thead>
+              <tbody id="budget-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Goals -->
+      <section class="view" id="view-goals">
+        <div class="card">
+          <div class="card-head"><h2>New savings goal</h2></div>
+          <form id="goal-form" class="form-grid" novalidate>
+            <label class="field field-wide">
+              <span>Goal name</span>
+              <input type="text" id="goal-name" placeholder="e.g. Emergency fund" maxlength="40" required>
+            </label>
+            <label class="field">
+              <span>Target (₹)</span>
+              <input type="number" id="goal-target" min="1" step="100" required>
+            </label>
+            <label class="field">
+              <span>Already saved (₹)</span>
+              <input type="number" id="goal-saved" min="0" step="100" placeholder="0">
+            </label>
+            <label class="field">
+              <span>Deadline</span>
+              <input type="month" id="goal-deadline" required>
+            </label>
+            <button type="submit" class="btn btn-primary field-btn">Add goal</button>
+          </form>
+        </div>
+        <p class="muted" id="goals-summary"></p>
+        <div id="goal-list" class="goal-grid"></div>
+      </section>
+
+      <!-- Assistant -->
+      <section class="view" id="view-assistant">
+        <div class="card chat">
+          <div id="chat-log" class="chat-log" aria-live="polite"></div>
+          <div id="chat-chips" class="chips"></div>
+          <form id="chat-form" class="chat-form">
+            <input type="text" id="chat-input" placeholder="Ask about your budget, spending or goals…" autocomplete="off">
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="view" id="view-settings">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Your data</h2></div>
+            <p class="muted" id="data-stats"></p>
+            <div class="btn-col">
+              <button type="button" class="btn btn-soft" id="btn-demo">Load demo data</button>
+              <button type="button" class="btn btn-ghost" id="btn-export">Export data (JSON)</button>
+              <button type="button" class="btn btn-danger" id="btn-clear">Clear all data</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2 class="ai-title"><span class="spark"></span>How the AI engine works</h2></div>
+            <p class="muted">PocketSmart AI Engine is a rule-based AI: it understands questions by intent matching and uses statistics for forecasts and unusual-spend detection. It runs fully offline and doesn't call an external AI model.</p>
+            <ul class="about">
+              <li><strong>Budget:</strong> income is split by your category percentages (default 50/30/20 rule).</li>
+              <li><strong>Categorisation:</strong> keywords in the description (Swiggy → Food, Uber → Travel, EB → Bills).</li>
+              <li><strong>Overspending:</strong> over budget when spent &gt; budget; near limit at 80%; likely to overspend when the month-end projection is above budget.</li>
+              <li><strong>Month-end projection:</strong> spent so far + remaining share of the month × last month's amount. Fixed bills use last month's amount.</li>
+              <li><strong>Forecast:</strong> weighted average of this month (projected) and the two previous months with weights 50%, 30% and 20%.</li>
+              <li><strong>Savings goal:</strong> needed per month = (target − saved) ÷ months left.</li>
+              <li><strong>Recommendations:</strong> suggested cut = overspend, capped at 25% of the category's spending.</li>
+              <li><strong>Categorisation confidence:</strong> brand name matched 95%, general keyword 80%, no match 40%.</li>
+              <li><strong>Unusual spend:</strong> a transaction more than 2× the category's average transaction over the last 3 months (rent excluded).</li>
+              <li><strong>Forecast confidence:</strong> 100 − variation of the last 3 months' totals (standard deviation ÷ average), kept between 60% and 98%.</li>
+              <li><strong>Financial health score:</strong> savings rate 40 + budget discipline 30 + goal progress 20 + spending trend 10.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/categorize.js"></script>
+  <script src="js/budget.js"></script>
+  <script src="js/prediction.js"></script>
+  <script src="js/goals.js"></script>
+  <script src="js/health.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/typewriter.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="data/sample-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
