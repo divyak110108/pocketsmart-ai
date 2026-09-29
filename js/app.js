@@ -69,8 +69,14 @@
   function route() {
     const name = location.hash.slice(1);
     current = VIEWS[name] ? name : 'dashboard';
+    document.body.dataset.view = current;
     $$('.view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + current));
     $$('.nav-link').forEach((a) => a.classList.toggle('active', a.dataset.view === current));
+    const nav = $('.nav');
+    const link = $('.nav-link.active');
+    if (link && nav.scrollWidth > nav.clientWidth) {
+      nav.scrollLeft = link.offsetLeft - nav.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2;
+    }
     const v = VIEWS[current];
     $('#page-title').textContent = v.title;
     $('#page-sub').textContent = typeof v.sub === 'function' ? v.sub() : v.sub;

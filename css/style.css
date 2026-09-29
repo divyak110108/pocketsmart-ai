@@ -583,7 +583,8 @@ input:focus, select:focus {
   .app { flex-direction: column; }
   .sidebar { width: 100%; height: auto; position: sticky; top: 0; z-index: 10; padding: 12px; }
   .brand { padding: 0 4px 10px; }
-  .nav { flex-direction: row; overflow-x: auto; gap: 6px; }
+  .nav { flex-direction: row; overflow-x: auto; gap: 6px; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
   .nav-link { flex-shrink: 0; padding: 8px 12px; }
   .sidebar-foot { display: none; }
   .main { padding: 20px 16px 40px; }
@@ -593,7 +594,32 @@ input:focus, select:focus {
   .health-body { flex-direction: column; align-items: stretch; }
   .gauge { margin: 0 auto; }
   .msg-body { max-width: calc(100% - 42px); }
-  .chat { height: calc(100vh - 230px); }
+
+  /* Assistant fills the screen below the header; only the message log scrolls */
+  body[data-view="assistant"] .app { height: 100vh; height: 100dvh; }
+  body[data-view="assistant"] .main { display: flex; flex-direction: column; min-height: 0; padding-bottom: 16px; }
+  body[data-view="assistant"] .topbar { margin-bottom: 16px; }
+  #view-assistant { flex: 1; min-height: 0; }
+  .chat { flex: 1; height: auto; min-height: 0; }
+  .chat-log { padding: 16px; }
+
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px 16px;
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chips .chip { flex-shrink: 0; white-space: nowrap; padding: 8px 14px; scroll-snap-align: start; }
+  .followups .chip-sm { padding: 6px 12px; }
+
+  .chat-form { gap: 8px; padding: 12px 16px; }
+  /* 16px stops iOS Safari zooming in when the input is focused */
+  #chat-input { min-width: 0; font-size: 16px; text-overflow: ellipsis; }
 }
 
 @media (max-width: 520px) {
@@ -605,4 +631,13 @@ input:focus, select:focus {
   .filters select { width: 100%; }
   .pct-row { grid-template-columns: 10px 1fr 90px; }
   .pct-amt { grid-column: 2 / 4; text-align: left; font-size: 12px; color: var(--muted); }
+  .chat-log { padding: 14px 12px; }
+  .msg.bot { gap: 8px; }
+  .avatar { width: 28px; height: 28px; border-radius: 9px; }
+  .avatar svg { width: 15px; height: 15px; }
+  .msg-body { max-width: calc(100% - 36px); }
+  .msg.user .bubble { max-width: 85%; }
+  .bubble { padding: 10px 12px; }
+  .chips { padding: 10px 12px; scroll-padding-inline: 12px; }
+  .chat-form { padding: 10px 12px; }
 }
